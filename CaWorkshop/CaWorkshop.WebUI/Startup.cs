@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CaWorkshop.Application;
 using CaWorkshop.Infrastructure;
+using FluentValidation.AspNetCore;
+using CaWorkshop.Application.Common.Interfaces;
 
 namespace CaWorkshop.WebUI
 {
@@ -24,7 +25,10 @@ namespace CaWorkshop.WebUI
             services.AddInfrastructure(Configuration);
             services.AddApplication(Configuration);
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddFluentValidation(fv => fv
+                .RegisterValidatorsFromAssemblyContaining<IApplicationDbContext>());
+
             services.AddRazorPages();
 
             services.AddOpenApiDocument(configure =>
