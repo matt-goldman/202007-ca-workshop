@@ -40,6 +40,12 @@ namespace CaWorkshop.WebUI
                 .AddIdentityServerJwt();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddOpenApiDocument(configure =>
+            {
+                configure.Title = "CaWorkshop API";
+            });
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -70,6 +76,9 @@ namespace CaWorkshop.WebUI
             }
 
             app.UseRouting();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseAuthentication();
             app.UseIdentityServer();
