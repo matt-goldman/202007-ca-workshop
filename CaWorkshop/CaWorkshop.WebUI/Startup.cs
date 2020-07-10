@@ -1,5 +1,6 @@
 using CaWorkshop.Application;
 using CaWorkshop.Infrastructure;
+using CleanArchitecture.WebUI.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
