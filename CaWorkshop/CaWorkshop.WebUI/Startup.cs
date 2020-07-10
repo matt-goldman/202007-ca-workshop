@@ -23,7 +23,8 @@ namespace CaWorkshop.WebUI
             services.AddInfrastructure(Configuration);
             services.AddApplication(Configuration);
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+                options.Filters.Add(new ApiExceptionFilter()));
 
             services.AddRazorPages();
 
