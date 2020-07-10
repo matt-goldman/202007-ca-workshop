@@ -2,30 +2,19 @@ using CaWorkshop.Application.TodoLists.Commands.CreateTodoList;
 using CaWorkshop.Application.TodoLists.Commands.DeleteTodoList;
 using CaWorkshop.Application.TodoLists.Commands.UpdateTodoList;
 using CaWorkshop.Application.TodoLists.Queries.GetTodoLists;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using CleanArchitecture.WebUI.Controllers;
 
 namespace CaWorkshop.WebUI.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
-    [ApiController]
-    public class TodoListsController : ControllerBase
+    public class TodoListsController : ApiController
     {
-        private readonly IMediator _mediator;
-
-        public TodoListsController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
-        // GET: api/TodoLists
         [HttpGet]
         public async Task<ActionResult<TodosVm>> GetTodoLists()
         {
-            return await _mediator.Send(new GetTodoListsQuery());
+            return await Mediator.Send(new GetTodoListsQuery());
         }
 
         // POST: api/TodoLists
@@ -33,7 +22,7 @@ namespace CaWorkshop.WebUI.Controllers
         public async Task<ActionResult<int>> PostTodoList(
             CreateTodoListCommand command)
         {
-            return await _mediator.Send(command);
+            return await Mediator.Send(command);
         }
 
         // PUT: api/TodoLists/5
@@ -46,7 +35,7 @@ namespace CaWorkshop.WebUI.Controllers
                 return BadRequest();
             }
 
-            await _mediator.Send(command);
+            await Mediator.Send(command);
 
             return NoContent();
         }
@@ -55,7 +44,7 @@ namespace CaWorkshop.WebUI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodoList(int id)
         {
-            await _mediator.Send(new DeleteTodoListCommand { Id = id });
+            await Mediator.Send(new DeleteTodoListCommand { Id = id });
 
             return NoContent();
         }

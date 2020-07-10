@@ -1,31 +1,21 @@
 using CaWorkshop.Application.TodoItems.Commands.CreateTodoItem;
 using CaWorkshop.Application.TodoItems.Commands.DeleteTodoItem;
 using CaWorkshop.Application.TodoItems.Commands.UpdateTodoItem;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using CleanArchitecture.WebUI.Controllers;
 
 namespace CaWorkshop.WebUI.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
-    [ApiController]
-    public class TodoItemsController : ControllerBase
+    public class TodoItemsController : ApiController
     {
-        private readonly IMediator _mediator;
-
-        public TodoItemsController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
         // POST: api/TodoItems
         [HttpPost]
         public async Task<ActionResult<long>> PostTodoItem(
             CreateTodoItemCommand command)
         {
-            return await _mediator.Send(command);
+            return await Mediator.Send(command);
         }
 
         // PUT: api/TodoItems/5
@@ -38,7 +28,7 @@ namespace CaWorkshop.WebUI.Controllers
                 return BadRequest();
             }
 
-            await _mediator.Send(command);
+            await Mediator.Send(command);
 
             return NoContent();
         }
@@ -47,7 +37,7 @@ namespace CaWorkshop.WebUI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodoItem(long id)
         {
-            await _mediator.Send(new DeleteTodoItemCommand { Id = id });
+            await Mediator.Send(new DeleteTodoItemCommand { Id = id });
 
             return NoContent();
         }
