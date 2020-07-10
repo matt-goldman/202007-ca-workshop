@@ -1,5 +1,7 @@
 using CaWorkshop.Application;
+using CaWorkshop.Application.Common.Interfaces;
 using CaWorkshop.Infrastructure;
+using CaWorkshop.WebUI.Services;
 using CleanArchitecture.WebUI.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,6 +28,10 @@ namespace CaWorkshop.WebUI
 
             services.AddControllersWithViews(options =>
                 options.Filters.Add(new ApiExceptionFilter()));
+
+            services.AddHttpContextAccessor();
+
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             services.AddRazorPages();
 

@@ -5,10 +5,12 @@ using CaWorkshop.Application.TodoLists.Queries.GetTodoLists;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CaWorkshop.WebUI.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class TodoListsController : ControllerBase
     {
